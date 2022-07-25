@@ -1,3 +1,19 @@
+const express = require("express");
+const app = express();
+const port = 3000;
+
+const topic = require("./lib/topic");
+
+// routing
+app.get("/", (req, res) => {
+    topic.home(req, res); // 메인 홈페이지 불러오기
+});
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
+});
+
+/*
 var http = require("http");
 var url = require("url");
 var topic = require("./lib/topic");
@@ -40,3 +56,4 @@ var app = http.createServer(function (request, response) {
   }
 });
 app.listen(3000);
+*/
