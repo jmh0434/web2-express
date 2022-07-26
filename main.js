@@ -1,12 +1,15 @@
 const express = require("express");
 const app = express();
 const port = 3000;
-
 const topic = require("./lib/topic");
 
 // routing
-app.get("/", (req, res) => {
-    topic.home(req, res); // 메인 홈페이지 불러오기
+app.get("/", (req, res) => { // 메인 홈페이지 구현
+    topic.home(req, res); 
+});
+
+app.get('/page/:pageId', (req, res) => { // 상세보기 페이지 구현
+    topic.page(req, res);
 });
 
 app.listen(port, () => {
