@@ -12,6 +12,14 @@ app.get('/page/:pageId', (req, res) => { // 상세보기 페이지 구현
     topic.page(req, res);
 });
 
+app.get('/create', (req, res) => {
+    topic.create(req,res);
+});
+
+app.post('/create_process', (req, res) => {
+    topic.create_process(req,res);
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
