@@ -3,8 +3,10 @@ const app = express();
 const port = 3000;
 const topic = require("./lib/topic");
 var bodyParser = require("body-parser"); //body-parser 미들웨어 호출
+var compression = require("compression");
 
 app.use(bodyParser.urlencoded({ extended: false })); // main.js이 실행될 때 POST 방식으로 요쳥된 미들웨어의 body구문을 parsing 수행함
+app.use(compression()); // 컨텐츠를 압축해서 전송해주는 미들웨어
 
 // routing
 app.get("/", (req, res) => { // 메인 홈페이지 구현
