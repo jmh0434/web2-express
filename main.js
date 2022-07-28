@@ -2,9 +2,12 @@ const express = require("express");
 const app = express();
 const port = 3000;
 const topic = require("./lib/topic");
+const author = require("./lib/author");
+
 var db = require("./lib/db");
 var bodyParser = require("body-parser"); //body-parser 미들웨어 호출
 var compression = require("compression");
+const { authorSelect } = require("./lib/template");
 
 app.use(express.static('public')); // 'public' 내의 정적인 파일을 사용하겠다
 app.use(bodyParser.urlencoded({ extended: false })); // main.js이 실행될 때 POST 방식으로 요쳥된 미들웨어의 body구문을 parsing 수행함
@@ -18,32 +21,52 @@ app.get('*', function(request, response, next) { // get request에서 공통적�
 });
 
 // routing
-app.get("/", (req, res) => { // 메인 홈페이지 구현
+app.get('/', (req, res) => { // 메인 홈페이지 구현
     topic.home(req, res); 
 });
 
-app.get('/page/:pageId', (req, res) => { // 상세보기 페이지 구현
-    topic.page(req, res);
+app.post('/author/create_process', (req, res) => {
+    author.create_process(req, res);
 });
 
-app.get('/create', (req, res) => { // 게시물 생성 폼 출력 구현
+app.get('/author/update', (req, res) => {
+    author.update(req, res);
+});
+
+app.post('/author/update_process', (req, res) => {
+    author.update_process(req, res);
+});
+
+app.post('/author/delete_process', (req, res) => {
+    author.delete_process(req, res);
+});
+
+app.get("/author", (req, res) => {
+  author.home(req, res);
+});
+
+app.get('/topic/create', (req, res) => { // 게시물 생성 폼 출력 구현
     topic.create(req, res);
 });
 
-app.post('/create_process', (req, res) => { // 게시물 생성 처리 구현
+app.post('/topic/create_process', (req, res) => { // 게시물 생성 처리 구현
     topic.create_process(req, res);
 });
 
-app.get('/update/:pageId', (req, res) => { // 게시물 수정 폼 구현
+app.get('/topic/update/:pageId', (req, res) => { // 게시물 수정 폼 구현
     topic.update(req, res);
 });
 
-app.post('/update_process', (req, res) => { // 게시물 수정 처리 구현
+app.post('/topic/update_process', (req, res) => { // 게시물 수정 처리 구현
     topic.update_process(req, res);
 });
 
-app.post('/delete_process', (req, res) => { // 게시물 삭제 처리 구현
+app.post('/topic/delete_process', (req, res) => { // 게시물 삭제 처리 구현
     topic.delete_process(req, res);
+});
+
+app.get("/topic/:pageId", (req, res) => { // 상세보기 페이지 구현
+  topic.page(req, res);
 });
 
 app.use(function (req, res, next) { // 404 에러
