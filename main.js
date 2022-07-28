@@ -46,6 +46,15 @@ app.post('/delete_process', (req, res) => { // 게시물 삭제 처리 구현
     topic.delete_process(req, res);
 });
 
+app.use(function (req, res, next) { // 404 에러
+  res.status(404).send("잘못된 경로 접근입니다!");
+});
+
+app.use(function (err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
