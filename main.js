@@ -9,6 +9,7 @@ const topicRouter = require("./routes/topicRoutes");
 const authorRouter = require("./routes/authorRoutes");
 const indexRouter = require("./routes/indexRoutes");
 
+app.use(helmet());
 app.use(express.static('public')); // 'public' 내의 정적인 파일을 사용하겠다
 app.use(bodyParser.urlencoded({ extended: false })); // main.js이 실행될 때 POST 방식으로 요쳥된 미들웨어의 body구문을 parsing 수행함
 app.use(compression()); // 컨텐츠를 압축해서 전송해주는 미들웨어
